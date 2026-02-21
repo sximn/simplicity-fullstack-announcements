@@ -9,6 +9,7 @@ export class AnnouncementsService {
   async create(dto: CreateAnnouncementDto) {
     const announcementData = {
       title: dto.title,
+      content: dto.content,
       publicationDate: new Date(dto.publicationDate),
     };
 

@@ -13,6 +13,10 @@ export class CreateAnnouncementDto {
   @IsNotEmpty()
   title: string;
 
+  @IsString()
+  @IsNotEmpty()
+  content: string;
+
   @IsDateString()
   publicationDate: string;
 

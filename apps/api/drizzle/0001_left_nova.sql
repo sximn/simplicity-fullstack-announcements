@@ -1,0 +1,1 @@
+ALTER TABLE `announcements` ADD `content` text NOT NULL;
