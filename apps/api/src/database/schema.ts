@@ -11,7 +11,7 @@ export const announcements = sqliteTable('announcements', {
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .$defaultFn(() => new Date()),
-  updatedAt: integer('created_at', { mode: 'timestamp' })
+  updatedAt: integer('updated_at', { mode: 'timestamp' })
     .notNull()
     .$defaultFn(() => new Date()),
 });

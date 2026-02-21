@@ -1,0 +1,1 @@
+ALTER TABLE `announcements` ADD `updated_at` integer NOT NULL;
