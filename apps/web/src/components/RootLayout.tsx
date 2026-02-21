@@ -10,7 +10,6 @@ export default function RootLayout() {
         <main className="main-content">
           <Outlet />
         </main>
-        <footer>Shared Footer Content</footer>
       </div>
     </div>
   );
