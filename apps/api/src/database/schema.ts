@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { InferInsertModel, InferSelectModel, relations } from 'drizzle-orm';
 import { sqliteTable, int, text, integer, primaryKey } from 'drizzle-orm/sqlite-core';
 
 export const announcements = sqliteTable('announcements', {
@@ -57,3 +57,12 @@ export const announcementsToCategoriesRelations = relations(
     }),
   }),
 );
+
+export type SelectAnnouncement = InferSelectModel<typeof announcements>;
+export type InsertAnnouncement = InferInsertModel<typeof announcements>;
+
+export type SelectAnnouncementToCategories = InferSelectModel<typeof announcementsToCategories>;
+export type InsertAnnouncementToCategories = InferInsertModel<typeof announcementsToCategories>;
+
+export type SelectCategory = InferSelectModel<typeof categories>;
+export type InsertCategory = InferInsertModel<typeof categories>;
