@@ -21,4 +21,18 @@ export class AnnouncementsService {
   async getAllAnnouncements() {
     return this.announcementsRepo.all();
   }
+
+  async getAllAnnouncementsWithCategories() {
+    const rawAnnouncementsAndCategories = await this.announcementsRepo.allWithCategories();
+
+    return rawAnnouncementsAndCategories.map((announcement) => {
+      const { announcementsToCategories, ...announcementAttrs } = announcement;
+      return {
+        ...announcementAttrs,
+        categories: announcementsToCategories.map((cat) => {
+          return cat.category;
+        }),
+      };
+    });
+  }
 }

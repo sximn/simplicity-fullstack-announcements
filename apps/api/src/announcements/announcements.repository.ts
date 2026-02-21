@@ -36,4 +36,16 @@ export class AnnouncementsRepository {
   async all() {
     return this.db.select().from(announcements);
   }
+
+  async allWithCategories() {
+    return await this.db.query.announcements.findMany({
+      with: {
+        announcementsToCategories: {
+          with: {
+            category: true,
+          },
+        },
+      },
+    });
+  }
 }

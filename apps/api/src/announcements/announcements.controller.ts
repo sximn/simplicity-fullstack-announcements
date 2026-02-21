@@ -13,6 +13,6 @@ export class AnnouncementsController {
 
   @Get()
   async getAll() {
-    return this.announcementsService.getAllAnnouncements();
+    return this.announcementsService.getAllAnnouncementsWithCategories();
   }
 }
