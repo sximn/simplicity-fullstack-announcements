@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { eq, and, or, like, inArray, SQL } from 'drizzle-orm';
 import { type DB } from 'src/database';
 import { InjectDatabase } from 'src/database/database.provider';
 import {
   announcements,
   announcementsToCategories,
+  categories,
   InsertAnnouncement,
   InsertAnnouncementToCategories,
   SelectCategory,
@@ -36,17 +37,44 @@ export class AnnouncementsRepository {
     });
   }
 
-  async allWithCategories() {
-    return await this.db.query.announcements.findMany({
-      orderBy: (announcements, { desc }) => [desc(announcements.updatedAt)],
-      with: {
-        announcementsToCategories: {
-          with: {
-            category: true,
-          },
+  async allWithCategories(searchQuery?: string, categoryIds?: SelectCategory['id'][]) {
+    const matchingIdsSubquery = this.db
+      .select({ id: announcements.id })
+      .from(announcements)
+      .leftJoin(
+        announcementsToCategories,
+        eq(announcements.id, announcementsToCategories.announcementId),
+      )
+      .where(
+        and(
+          searchQuery
+            ? or(
+                like(announcements.title, `%${searchQuery}%`),
+                like(announcements.content, `%${searchQuery}%`),
+              )
+            : undefined,
+          categoryIds?.length
+            ? inArray(announcementsToCategories.categoryId, categoryIds)
+            : undefined,
+        ),
+      );
+
+    return await this.db
+      .select({
+        announcement: announcements,
+        category: {
+          id: categories.id,
+          name: categories.name,
         },
-      },
-    });
+      })
+      .from(announcements)
+      .where(inArray(announcements.id, matchingIdsSubquery))
+      .leftJoin(
+        announcementsToCategories,
+        eq(announcements.id, announcementsToCategories.announcementId),
+      )
+      .leftJoin(categories, eq(announcementsToCategories.categoryId, categories.id))
+      .orderBy(announcements.id);
   }
 
   async findOne(id: number) {

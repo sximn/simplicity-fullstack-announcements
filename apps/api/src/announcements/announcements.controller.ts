@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseArrayPipe,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { AnnouncementsService } from './announcements.service';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
@@ -13,8 +23,14 @@ export class AnnouncementsController {
   }
 
   @Get()
-  async getAll() {
-    return this.announcementsService.getAllAnnouncementsWithCategories();
+  async getAll(
+    @Query('search')
+    search?: string,
+
+    @Query('categoryIds', new ParseArrayPipe({ items: Number, separator: ',', optional: true }))
+    categoryIds?: number[],
+  ) {
+    return this.announcementsService.getAllAnnouncementsWithCategories(search, categoryIds);
   }
 
   @Get(':id')

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { AnnouncementsRepository } from './announcements.repository';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
-import { UpdateAnnouncement } from 'src/database/schema';
+import { SelectCategory } from 'src/database/schema';
 
 @Injectable()
 export class AnnouncementsService {
@@ -21,18 +21,32 @@ export class AnnouncementsService {
     });
   }
 
-  async getAllAnnouncementsWithCategories() {
-    const rawAnnouncementsAndCategories = await this.announcementsRepo.allWithCategories();
+  async getAllAnnouncementsWithCategories(searchQuery?: string, categoryIds?: number[]) {
+    const rawFlat = await this.announcementsRepo.allWithCategories(searchQuery, categoryIds);
+    type AggregatedAnnouncements = (typeof rawFlat)[number]['announcement'] & {
+      categories: Omit<SelectCategory, 'slug'>[];
+    };
 
-    return rawAnnouncementsAndCategories.map((announcement) => {
-      const { announcementsToCategories, ...announcementAttrs } = announcement;
-      return {
-        ...announcementAttrs,
-        categories: announcementsToCategories.map((cat) => {
-          return cat.category;
-        }),
-      };
-    });
+    const aggregated = rawFlat.reduce((acc, row) => {
+      const item = acc.get(row.announcement.id);
+      const category = row.category;
+
+      if (item) {
+        if (category) {
+          item.categories.push(category);
+        }
+      } else {
+        acc.set(row.announcement.id, {
+          ...row.announcement,
+          categories: category ? [category] : [],
+        });
+      }
+      return acc;
+    }, new Map<number, AggregatedAnnouncements>());
+
+    const rawAggregatedCategories = Array.from(aggregated.values());
+
+    return rawAggregatedCategories;
   }
 
   async findOne(id: number) {
