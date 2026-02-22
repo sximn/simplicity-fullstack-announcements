@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import type { Announcement } from '../types';
 import { formatDateTime } from '../utils/date';
 import './AnnouncementsTable.css';
+import EditIcon from './EditIcon';
 
 type Props = {
   announcements: Announcement[];
@@ -29,13 +30,10 @@ export function AnnouncementsTable({ announcements }: Props) {
               <td>{announcement.title}</td>
               <td>{formatDateTime({ date: announcement.publicationDate })}</td>
               <td>{formatDateTime({ date: announcement.updatedAt, strategy: 'without-time' })}</td>
-              <td>{announcement.categoryIds}</td>
-              <td className="inline-flex border-none">
-                <Link
-                  className="p-2 text-cyan-800 hover:text-cyan-500"
-                  to={`/announcements/${announcement.id}`}
-                >
-                  {/* <AiOutlineEdit /> */}
+              <td>{announcement.categories.join(', ')}</td>
+              <td>
+                <Link className="edit-link" to={`/announcements/${announcement.id}`}>
+                  <EditIcon />
                 </Link>
               </td>
             </tr>

@@ -15,10 +15,10 @@ const announcementsFn = async () => {
     const announcement: Announcement = {
       id: r.id,
       title: r.title,
+      content: r.content,
       publicationDate: new Date(r.publicationDate),
       updatedAt: new Date(r.updatedAt),
-      categoryIds: r.categoryIds,
-      content: '', // TODO: add content to the data model and return it
+      categories: r.categories.map((c) => c.name),
       createdAt: new Date(r.createdAt),
     };
     return announcement;

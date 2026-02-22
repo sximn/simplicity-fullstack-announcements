@@ -1,24 +1,23 @@
 import { useAnnouncements } from '../api/announcements/use-announcements';
 import { AnnouncementsTable } from '../components/AnnouncementsTable';
+import './Announcements.css';
 
 export default function Announcements() {
   const announcements = useAnnouncements();
 
   return (
     <div>
-      <h2 className="mb-4">Announcements</h2>
+      <h2>Announcements</h2>
       <div>
-        {announcements.isLoading && <div className="py-2 text-teal-900 font-bold">Loading...</div>}
-
-        {announcements.isFetching && (
-          <div className="py-2 text-teal-900 font-bold">Fetching...</div>
-        )}
-
-        {announcements.error instanceof Error && <div>{announcements.error.message}</div>}
-
-        {announcements.isSuccess && (
+        {announcements.isLoading ? (
+          <div className="loading">Loading...</div>
+        ) : announcements.isError ? (
+          <div className="error">{announcements.error.message}</div>
+        ) : (
           <div>
-            <AnnouncementsTable announcements={announcements.data} />
+            {announcements.isFetching && <div className="fetching-top-bar">Updating...</div>}
+
+            {announcements.isSuccess && <AnnouncementsTable announcements={announcements.data} />}
           </div>
         )}
       </div>

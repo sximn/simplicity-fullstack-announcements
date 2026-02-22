@@ -6,6 +6,7 @@ import Announcements from './views/Announcements.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './components/RootLayout.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AnnouncementDetail from './views/AnnouncementDetail.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: 'announcements',
         element: <Announcements />,
+      },
+      {
+        path: 'announcements/:id',
+        element: <AnnouncementDetail />,
       },
     ],
   },

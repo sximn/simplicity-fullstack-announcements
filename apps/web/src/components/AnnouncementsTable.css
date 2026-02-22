@@ -60,13 +60,12 @@ td:last-child {
   align-items: center;
 }
 
-td:last-child a {
-  padding: 0.5rem;
-  color: #155e75;
-  text-decoration: none;
-  transition: color 0.2s ease;
+.edit-link {
+  padding: 0.5rem 0.5rem 0.3rem 0.5rem;
+  border: 0.1rem solid transparent;
 }
-
-td:last-child a:hover {
-  color: #06b6d4;
+.edit-link:hover {
+  border: 0.1rem solid rgb(from var(--muted) r g b / 0.5);
+  border-radius: 20%;
+  background-color: rgb(from var(--muted) r g b / 0.3);
 }
