@@ -1,0 +1,117 @@
+form > div {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+input[type='text'],
+textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid hsl(0, 0%, 80%);
+  transition:
+    border-color 100ms,
+    box-shadow 100ms;
+  outline: none;
+  background-color: white;
+  color: hsl(0, 0%, 20%);
+}
+
+input[type='text']:hover,
+textarea:hover {
+  border-color: hsl(0, 0%, 70%);
+}
+
+input[type='text']:focus,
+textarea:focus {
+  border-color: #2684ff;
+  box-shadow: 0 0 0 1px #2684ff;
+}
+
+.category-note {
+  font-size: small;
+  color: rgb(from var(--foreground) r g b / 0.6);
+}
+
+input[type='datetime-local'] {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid hsl(0, 0%, 80%);
+  color: hsl(0, 0%, 20%);
+  background-color: white;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input[type='datetime-local']:focus {
+  border-color: #2684ff;
+  box-shadow: 0 0 0 1px #2684ff;
+  outline: none;
+}
+
+input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.5);
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.button-container {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+}
+
+button[type='submit'] {
+  background-color: var(--primary);
+  color: var(--primary-foregorund);
+  border: none;
+  width: fit-content;
+  max-width: 20rem;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 100ms;
+}
+
+button[type='submit']:hover {
+  background-color: rgb(from var(--primary) calc(r * 1.1) calc(g * 1.1) calc(b * 0.9));
+}
+
+button[type='submit']:disabled {
+  background-color: hsl(0, 0%, 90%);
+  color: hsl(0, 0%, 60%);
+  cursor: not-allowed;
+}
+
+.input-error {
+  border-color: var(--destructive) !important;
+}
+
+.select-error > div > div {
+  border-color: var(--destructive);
+}
+
+.error-message {
+  color: var(--destructive);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}

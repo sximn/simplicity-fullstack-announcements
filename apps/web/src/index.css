@@ -11,6 +11,7 @@
   --primary-foreground: #1d1d1c;
   --muted: rgb(200, 200, 200);
   --muted-foreground: var(--primary-foreground);
+  --destructive: #d32f2f;
 
   /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'Lato', sans-serif;

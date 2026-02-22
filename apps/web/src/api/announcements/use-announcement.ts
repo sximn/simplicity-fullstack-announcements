@@ -17,7 +17,7 @@ const announcementFn = async (id: number) => {
     content: res.content,
     publicationDate: new Date(res.publicationDate),
     updatedAt: new Date(res.updatedAt),
-    categories: res.categories.map((c) => c.name),
+    categories: res.categories,
     createdAt: new Date(res.createdAt),
   };
   return announcement;

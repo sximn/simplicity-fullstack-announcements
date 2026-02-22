@@ -30,7 +30,7 @@ export function AnnouncementsTable({ announcements }: Props) {
               <td>{announcement.title}</td>
               <td>{formatDateTime({ date: announcement.publicationDate })}</td>
               <td>{formatDateTime({ date: announcement.updatedAt, strategy: 'without-time' })}</td>
-              <td>{announcement.categories.join(', ')}</td>
+              <td>{announcement.categories.map((c) => c.name).join(', ')}</td>
               <td>
                 <Link className="edit-link" to={`/announcements/${announcement.id}`}>
                   <EditIcon />

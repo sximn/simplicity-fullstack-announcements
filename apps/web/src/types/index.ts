@@ -18,10 +18,11 @@ export type Announcement = {
   id: number;
   title: string;
   content: string;
-  categories: string[];
+  categories: Array<Omit<CategoryDto, 'slug'>>;
   publicationDate: Date;
   updatedAt: Date;
   createdAt: Date;
 };
 
 export type CreateAnnouncement = Omit<Announcement, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateAnnouncement = Partial<CreateAnnouncement> & { id: Announcement['id'] };
