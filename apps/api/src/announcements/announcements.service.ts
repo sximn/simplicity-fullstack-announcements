@@ -21,10 +21,6 @@ export class AnnouncementsService {
     });
   }
 
-  async getAllAnnouncements() {
-    return this.announcementsRepo.all();
-  }
-
   async getAllAnnouncementsWithCategories() {
     const rawAnnouncementsAndCategories = await this.announcementsRepo.allWithCategories();
 
