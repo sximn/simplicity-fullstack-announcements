@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAnnouncement } from '../api/announcements/use-announcement';
 import { useUpdateAnnouncement } from '../api/announcements/use-update-announcement.';
 import { useCategories } from '../api/categories/use-categories';
@@ -6,6 +6,7 @@ import { AnnouncementForm, type AnnouncementFormValues } from '../components/Ann
 import type { UpdateAnnouncement } from '../types';
 
 export default function AnnouncementDetail() {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const numId = Number(id);
 
@@ -26,7 +27,11 @@ export default function AnnouncementDetail() {
       publicationDate: new Date(formData.publicationDate),
       categories: formData.categories.map((c) => ({ id: c.value, name: c.label })),
     };
-    updateMutation.mutate(updateAnnouncement);
+    updateMutation.mutate(updateAnnouncement, {
+      onSuccess: () => {
+        navigate('/announcements');
+      },
+    });
   };
 
   if (isLoading) return <div className="loading">Loading...</div>;
@@ -40,7 +45,7 @@ export default function AnnouncementDetail() {
         allCategories={allCategoryOptions}
         onSubmit={handleUpdate}
         isPending={updateMutation.isPending}
-        submitLabel="Update Announcement"
+        submitLabel="Publish" // "Update Assignment" to signify the intent
       />
     </div>
   );

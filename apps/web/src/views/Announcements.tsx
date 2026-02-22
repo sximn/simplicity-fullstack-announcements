@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useAnnouncements } from '../api/announcements/use-announcements';
 import { AnnouncementsTable } from '../components/AnnouncementsTable';
 import './Announcements.css';
@@ -7,7 +8,12 @@ export default function Announcements() {
 
   return (
     <div>
-      <h2>Announcements</h2>
+      <div className="announcements-header">
+        <h2>Announcements</h2>
+        <Link to={'/announcements/new'} className="new-btn">
+          New Announcement
+        </Link>
+      </div>
       <div>
         {announcements.isLoading ? (
           <div className="loading">Loading...</div>

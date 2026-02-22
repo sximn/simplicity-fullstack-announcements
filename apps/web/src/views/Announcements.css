@@ -7,3 +7,21 @@ h2 {
   color: #0b4f4a;
   font-weight: bold;
 }
+
+.announcements-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-btn {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  padding: 10px 20px;
+  border-radius: 2rem;
+}
+
+.new-btn:hover {
+  background-color: rgb(from var(--primary) calc(r * 1.1) calc(g * 1.1) calc(b * 0.9));
+}

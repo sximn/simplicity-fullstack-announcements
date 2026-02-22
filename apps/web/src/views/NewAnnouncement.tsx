@@ -2,8 +2,10 @@ import { useCategories } from '../api/categories/use-categories';
 import { AnnouncementForm, type AnnouncementFormValues } from '../components/AnnouncementForm';
 import type { CreateAnnouncement } from '../types';
 import { useCreateAnnouncement } from '../api/announcements/use-create-announcement';
+import { useNavigate } from 'react-router-dom';
 
 export default function NewAnnouncement() {
+  const navigate = useNavigate();
   const categories = useCategories();
   const createMutation = useCreateAnnouncement();
 
@@ -19,7 +21,11 @@ export default function NewAnnouncement() {
       publicationDate: new Date(formData.publicationDate),
       categories: formData.categories.map((c) => ({ id: c.value, name: c.label })),
     };
-    createMutation.mutate(createAnnouncement);
+    createMutation.mutate(createAnnouncement, {
+      onSuccess: () => {
+        navigate('/announcements');
+      },
+    });
   };
 
   return (
@@ -29,7 +35,7 @@ export default function NewAnnouncement() {
         allCategories={allCategoryOptions}
         onSubmit={handleCreate}
         isPending={createMutation.isPending}
-        submitLabel="Create Announcement"
+        submitLabel="Publish" // "Create Announcement" to signify the intent
       />
     </div>
   );
