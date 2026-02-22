@@ -20,3 +20,50 @@ This is a full-stack demo project with NestJS on the backend and React on the fr
    - `pnpm run dev`
 
 6. Access the web page on `http://localhost:5173`
+
+# How to test the API
+
+The API is available on `http://localhost:3000` after running the `dev` script from above.
+
+1. Create a New Announcement
+
+- POST `/announcements`
+- Body:
+
+```json
+{
+  "title": "New announcement",
+  "content": "My first announcement.",
+  "publicationDate": "2026-02-22T10:00:00Z",
+  "categoryIds": [1, 3]
+}
+```
+
+2. Get All (Filtering & Searching)
+
+- Get Everything (No filters)
+  - GET `/announcements`
+
+- Search by Text
+  - GET `/announcements?search=New`
+
+- Filter by Multiple Categories
+  - GET `/announcements?categoryIds=1,3`
+
+- Combined Search and Filter
+  - GET `/announcements?search=first&categoryIds=1,2`
+
+3. Get Single Announcement
+
+- GET `/announcements/1`
+
+4. Update Announcement
+
+- PUT `/announcements/1`
+- Body:
+
+```json
+{
+  "title": "Updated Title Only"
+}
+```
