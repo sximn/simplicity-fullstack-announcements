@@ -33,3 +33,4 @@ export type CreateAnnouncementDto = {
   publicationDate: string;
   categoryIds: number[];
 };
+export type UpdateAnnouncementDto = Partial<CreateAnnouncementDto>;
