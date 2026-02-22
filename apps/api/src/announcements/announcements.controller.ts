@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { AnnouncementsService } from './announcements.service';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
+import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 
 @Controller('announcements')
 export class AnnouncementsController {
@@ -16,8 +17,13 @@ export class AnnouncementsController {
     return this.announcementsService.getAllAnnouncementsWithCategories();
   }
 
-  @Get('/:id')
+  @Get(':id')
   getAnnouncement(@Param('id') id: number) {
     return this.announcementsService.findOne(id);
+  }
+
+  @Put(':id')
+  updateAnnouncement(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateAnnouncementDto) {
+    return this.announcementsService.update(id, dto);
   }
 }

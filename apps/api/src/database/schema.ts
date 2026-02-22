@@ -61,6 +61,9 @@ export const announcementsToCategoriesRelations = relations(
 
 export type SelectAnnouncement = InferSelectModel<typeof announcements>;
 export type InsertAnnouncement = InferInsertModel<typeof announcements>;
+export type UpdateAnnouncement = Omit<Partial<InsertAnnouncement>, 'createdAt' | 'updatedAt'> & {
+  id: SelectAnnouncement['id'];
+};
 
 export type SelectAnnouncementToCategories = InferSelectModel<typeof announcementsToCategories>;
 export type InsertAnnouncementToCategories = InferInsertModel<typeof announcementsToCategories>;

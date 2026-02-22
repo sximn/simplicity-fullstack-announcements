@@ -7,6 +7,8 @@ import {
   announcementsToCategories,
   InsertAnnouncement,
   InsertAnnouncementToCategories,
+  SelectCategory,
+  UpdateAnnouncement,
 } from 'src/database/schema';
 
 @Injectable()
@@ -60,6 +62,39 @@ export class AnnouncementsRepository {
           },
         },
       },
+    });
+  }
+
+  async update(data: UpdateAnnouncement & { categoryIds?: Array<SelectCategory['id']> }) {
+    return await this.db.transaction(async (tx) => {
+      await tx
+        .update(announcements)
+        .set({
+          title: data.title,
+          content: data.content,
+          publicationDate: data.publicationDate,
+        })
+        .where(eq(announcements.id, data.id));
+
+      // update categories if they were provided
+      if (data.categoryIds) {
+        // delete existing links
+        await tx
+          .delete(announcementsToCategories)
+          .where(eq(announcementsToCategories.announcementId, data.id));
+
+        // insert new links
+        if (data.categoryIds.length > 0) {
+          await tx.insert(announcementsToCategories).values(
+            data.categoryIds.map((catId) => ({
+              announcementId: data.id,
+              categoryId: catId,
+            })),
+          );
+        }
+      }
+
+      return { success: true };
     });
   }
 }

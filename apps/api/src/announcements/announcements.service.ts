@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AnnouncementsRepository } from './announcements.repository';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
+import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
+import { UpdateAnnouncement } from 'src/database/schema';
 
 @Injectable()
 export class AnnouncementsService {
@@ -50,5 +52,15 @@ export class AnnouncementsService {
         return cat.category;
       }),
     };
+  }
+
+  async update(id: number, dto: UpdateAnnouncementDto) {
+    const updateData = {
+      ...dto,
+      id,
+      publicationDate: dto.publicationDate ? new Date(dto.publicationDate) : undefined,
+    };
+
+    return this.announcementsRepo.update(updateData);
   }
 }
