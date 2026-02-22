@@ -26,3 +26,10 @@ export type Announcement = {
 
 export type CreateAnnouncement = Omit<Announcement, 'id' | 'createdAt' | 'updatedAt'>;
 export type UpdateAnnouncement = Partial<CreateAnnouncement> & { id: Announcement['id'] };
+
+export type CreateAnnouncementDto = {
+  title: string;
+  content: string;
+  publicationDate: string;
+  categoryIds: number[];
+};
