@@ -10,16 +10,19 @@ This is a full-stack demo project with NestJS on the backend and React on the fr
 2. Install dependencies (using pnpm)
    - `pnpm i`
 
-3. Initialize the sqlite DB - this will create a file in the root of the project `/api` called `local.db`
+3. Create (copy) the environment variables:
+   - `cp apps/api/.env.example apps/api/.env`
+
+4. Initialize the sqlite DB - this will create a file in the root of the project `/api` called `local.db`
    - `pnpm run db:migrate`
 
-4. Initialize the categories (categories are stored in the DB)
+5. Initialize the categories (categories are stored in the DB)
    - `pnpm run db:seed`
 
-5. Run the dev process (that will start both the backend and the frontend)
+6. Run the dev process (that will start both the backend and the frontend)
    - `pnpm run dev`
 
-6. Access the web page on `http://localhost:5173`
+7. Access the web page on `http://localhost:5173`
 
 # How to test the API
 
