@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { eq } from 'drizzle-orm';
 import { type DB } from 'src/database';
 import { InjectDatabase } from 'src/database/database.provider';
 import {
@@ -39,6 +40,19 @@ export class AnnouncementsRepository {
 
   async allWithCategories() {
     return await this.db.query.announcements.findMany({
+      with: {
+        announcementsToCategories: {
+          with: {
+            category: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findOne(id: number) {
+    return await this.db.query.announcements.findFirst({
+      where: eq(announcements.id, id),
       with: {
         announcementsToCategories: {
           with: {

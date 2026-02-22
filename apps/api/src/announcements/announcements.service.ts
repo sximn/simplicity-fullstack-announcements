@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AnnouncementsRepository } from './announcements.repository';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 
@@ -35,5 +35,20 @@ export class AnnouncementsService {
         }),
       };
     });
+  }
+
+  async findOne(id: number) {
+    const raw = await this.announcementsRepo.findOne(id);
+    if (!raw) {
+      throw new NotFoundException('Announcement not found');
+    }
+
+    const { announcementsToCategories, ...announcementAttrs } = raw;
+    return {
+      ...announcementAttrs,
+      categories: announcementsToCategories.map((cat) => {
+        return cat.category;
+      }),
+    };
   }
 }

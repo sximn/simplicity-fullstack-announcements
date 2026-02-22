@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AnnouncementsService } from './announcements.service';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 
@@ -14,5 +14,10 @@ export class AnnouncementsController {
   @Get()
   async getAll() {
     return this.announcementsService.getAllAnnouncementsWithCategories();
+  }
+
+  @Get('/:id')
+  getAnnouncement(@Param('id') id: number) {
+    return this.announcementsService.findOne(id);
   }
 }
